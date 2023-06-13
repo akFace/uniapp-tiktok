@@ -1,6 +1,7 @@
 <template>
   <div class="video-container">
     <mTikTok
+      ref="mTikTokRef"
       :video-list="state.videoList"
       @loadMore="loadMore"
       @change="change"
@@ -13,9 +14,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
 // 导入组件
 import mTikTok from "@/components/mTikTok.vue";
+
+const mTikTokRef = ref<InstanceType<typeof mTikTok>>();
 
 const state = reactive({
   videoList: [
@@ -58,6 +61,16 @@ const loadMore = () => {
 const change = (e: any) => {
   console.log("🚀 ~ file: index.vue:53 ~ change ~ data:", e);
 };
+
+// 播放第几个
+const playIndex = (index: number) => {
+  mTikTokRef.value?.initSwiperData(index);
+};
+
+onMounted(() => {
+  // 直接播放第3个
+  playIndex(3);
+});
 </script>
 <style lang="scss">
 .video-layer {

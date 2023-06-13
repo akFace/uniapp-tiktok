@@ -14,7 +14,7 @@
 4. 构建项目资源: `npm run build:mp-weixin`
 5. 打开小程序开发工具导入`dist/dev/mp-weixin` 即可
 
-## 参考 api
+## 参考 API
 
 | 属性                | 类型        | 说明                                                                   |
 | ------------------- | ----------- | ---------------------------------------------------------------------- |
@@ -27,17 +27,25 @@
 | @play               | EventHandle | 当开始/继续播放时触发 play 事件                                        |
 | @error              | EventHandle | 视频播放出错时触发                                                     |
 | @ended              | EventHandle | 当播放到末尾时触发 ended 事件                                          |
-| @loadMore           | EventHandle | 当滚动到最后 N 条数据需要加载更多时触发                                |
+| @loadMore           | EventHandle | 当滚动到最后第 N 条数据后，需要加载更多时触发                          |
 | @change             | EventHandle | 切换视频时触发                                                         |
 | @click              | EventHandle | 点击整个视频区域触发                                                   |
 | @controlstoggle     | EventHandle | 控制栏状态变化触发                                                     |
 
+### Slots 插槽
+
+| 属性    | 默认值 | 说明                                                                                    |
+| ------- | ------ | --------------------------------------------------------------------------------------- |
+| default | -      | 自定义内容，覆盖到视频上方的所有自定义内容 v-slot="data" 为当前渲染数据，请参照使用示例 |
+
 ## 使用示例
 
 ```javascript
+
 <template>
   <div class="video-container">
     <mTikTok
+      ref="mTikTokRef"
       :video-list="state.videoList"
       @loadMore="loadMore"
       @change="change"
@@ -50,11 +58,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
 // 导入组件
 import mTikTok from "@/components/mTikTok.vue";
 
-// 视频数据
+const mTikTokRef = ref<InstanceType<typeof mTikTok>>();
+
 const state = reactive({
   videoList: [
     {
@@ -89,14 +98,23 @@ const state = reactive({
 });
 
 const loadMore = () => {
-  // 触发加载更多， 请在此处获取更多数据，追加到videoList中
+  // 触发加载更多
   console.log("加载更多");
 };
 
 const change = (e: any) => {
-    // 滑动切换触发
   console.log("🚀 ~ file: index.vue:53 ~ change ~ data:", e);
 };
+
+// 播放第几个
+const playIndex = (index: number) => {
+  mTikTokRef.value?.initSwiperData(index);
+};
+
+onMounted(() => {
+  // 直接播放第3个
+  playIndex(3);
+});
 </script>
 <style lang="scss">
 .video-layer {
@@ -106,4 +124,5 @@ const change = (e: any) => {
   color: #fff;
 }
 </style>
+
 ```
