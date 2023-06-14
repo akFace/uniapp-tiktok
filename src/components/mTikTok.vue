@@ -12,6 +12,7 @@
         <video
           :id="`video__${index}`"
           :controls="controls"
+          :show-center-play-btn="controls"
           :autoplay="false"
           :loop="loop"
           :object-fit="item.objectFit"
@@ -23,6 +24,17 @@
           :src="item.src"
           v-if="index === 0 || !state.isFirstLoad"
         ></video>
+        <view
+          class="m-tiktok-video-play-btn"
+          v-if="!controls && state.displayIndex === index"
+          @click="togglePlay"
+        >
+          <text
+            class="m-tiktok-video-iconfont video-icon"
+            :class="{ active: !state.isPlaying }"
+            >&#xe607;</text
+          >
+        </view>
         <image
           v-if="item.poster && state.displayIndex != index"
           :src="item.poster"
@@ -86,7 +98,7 @@ const props = defineProps({
    */
   controls: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   /**
    * 是否自动播放
@@ -118,10 +130,9 @@ const state = reactive({
   originIndex: 0, // 记录源数据的下标
   current: 0,
   oid: 0,
-  showControls: "",
-  toggleShow: true, // 显示面板
   videoContexts: [] as any,
   isFirstLoad: true,
+  isPlaying: false,
 });
 
 const initVideoContexts = () => {
@@ -133,11 +144,11 @@ const initVideoContexts = () => {
 };
 
 const onPlay = (e: Event) => {
+  state.isPlaying = true;
   emits("play", e);
 };
 
 function handleClick(e: Event) {
-  state.toggleShow = !state.toggleShow;
   emits("click", e);
 }
 function ended() {
@@ -222,13 +233,27 @@ function swiperChange(event: any) {
     state.oid = state.originIndex + 1;
     initSwiperData(state.originIndex);
   }
-  state.toggleShow = true;
 }
 
 function controlstoggle(e: any) {
-  state.showControls = e.detail.show;
   emits("controlstoggle", e);
 }
+
+const togglePlay = () => {
+  const video = uni.createVideoContext(`video__${state.displayIndex}`, _this);
+  if (state.isPlaying) {
+    video.pause();
+    state.isPlaying = false;
+  } else {
+    video.play();
+    state.isPlaying = true;
+  }
+};
+
+const playSeeked = (value: number) => {
+  const video = uni.createVideoContext(`video__${state.displayIndex}`, _this);
+  video.seek(value);
+};
 
 watch(
   () => props.videoList,
@@ -261,10 +286,23 @@ onUnload(() => {
 
 defineExpose({
   initSwiperData,
+  togglePlay,
+  playSeeked,
 });
 </script>
 
 <style lang="scss">
+@font-face {
+  font-family: "m-tiktok-play-icon";
+  src: url(data:font/woff2;charset=utf-8;base64,d09GMgABAAAAAAJ0AA0AAAAABlgAAAIiAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP0ZGVE0cGh4GYACCQhEICkhaCwoAATYCJAMQBCAFhQIHLxt4BcieBXbLR4jiyygbC491Mg0vz9JsPPz/ft/2ufeMmCQP9fXfRhxvMKHjkcSsTkqWplJJqpFFfn79mr4NG5fvwujI+EPeZCbudGJcy6oVklRVp8IAdgMJUqD853ceuhm3iSafWxNoC0bbskAmUGABTlrDAgwsC+xJ3/SJf3DecLgpCpyFgDcXlRJ8uiufSVcHBjENilBVIVGQKS50UZ6U1+ApeD7+6kcvRVcl2fZub1Q8/BfJG9VHbUp9J0UAYBWhomIRgUZWYFHOKkgp+FFsyVvmRkB0E4AooAg/DwF/49FSQIJeBMbBDIAEQIzfDW+OPVHX48vXUy26fUwfJnN0+tW5bLx3+dz5fHT61rQEIBDc77r579ZI8793IDWgftfb8/q83gC9Cggqvex6gvqcDoBMGojkOvpX4wgU9OtHC2DcOwgwoYpA6LWDQNHjDgJVr8cCpF7PBOgy4JUA3Xq9BYF+29EgMGAiLlSRfVgDlgyjlmQx7JSsRgVQYkeyy7RLstuoF7Lfid+qAWtxbiWmkbDEVgmyA2hRBHx6jOEomxtSuCEvAg5k/U4c0Bh2XJIYfiwLaz88BE9oYgkrKPS0dWGtk7/X7rqFOsU+TZzFM4k9Qx9jOkEXC3iErR+f0LhcASEUC9g0CtaGY3Jrsjf6zPrqiLsTyi1RpN9z3wPOMRaa6+jQAzbblCgVWLpySeZmOVzvLw8uOfSjoLSEEiV7Yg==)
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+.m-tiktok-video-iconfont {
+  font-family: m-tiktok-play-icon;
+}
 .m-tiktok-video-swiper,
 .m-tiktok-video-player {
   width: 100%;
@@ -278,8 +316,30 @@ defineExpose({
   .m-tiktok-video-poster {
     background-color: #000;
     position: absolute;
-    width: 100%;
-    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .m-tiktok-video-play-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .video-icon {
+      font-size: 50px;
+      display: block;
+      color: rgba(255, 255, 255, 0.8);
+      opacity: 0;
+      &.active {
+        opacity: 1;
+      }
+    }
   }
 }
 </style>
