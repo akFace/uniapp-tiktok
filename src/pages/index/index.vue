@@ -106,7 +106,7 @@ const playIndex = (index: number) => {
 
 onMounted(() => {
   // 直接播放第3个
-  playIndex(3);
+  // playIndex(3);
 });
 </script>
 <style lang="scss">
@@ -129,6 +129,7 @@ onMounted(() => {
     width: 160px;
     height: 80px;
     background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
   }
 }
 .video-side-right {

@@ -8,31 +8,32 @@
 - 自动预加载视频
 - 首次渲染优化
 
-## 快速开始
+## 快速开始，下载插件后请按照此方法运行调试
 
 1. 安装 nodejs: https://nodejs.org/en/
 2. 安装依赖: `npm i`
 3. 运行项目: `npm run dev:mp-weixin`
 4. 构建项目资源: `npm run build:mp-weixin`
 5. 打开小程序开发工具导入`dist/dev/mp-weixin` 即可
+6. 真机预览，请点小程序开发工具上的预览，扫码真机预览即可
 
 ## 参考 API
 
-| 属性                | 类型        | 说明                                                                    |
-| ------------------- | ----------- | ----------------------------------------------------------------------- |
-| videoList           | Array       | 视频列表，数组对象 `{src: string, poster?: string, objectFit?: string}` |
-| loop                | Boolean     | 是否循环播放视频                                                        |
-| controls            | Boolean     | 显示原生控制栏                                                          |
-| autoplay            | Boolean     | 是否自动播放                                                            |
-| autoChange          | Boolean     | 是否自动滚动播放                                                        |
-| loadMoreOffsetCount | Boolean     | 滚动加载阈值（即播放到剩余多少个之后触发加载更多                        |
-| @play               | EventHandle | 当开始/继续播放时触发 play 事件                                         |
-| @error              | EventHandle | 视频播放出错时触发                                                      |
-| @ended              | EventHandle | 当播放到末尾时触发 ended 事件                                           |
-| @loadMore           | EventHandle | 当滚动到最后第 N 条数据后，需要加载更多时触发                           |
-| @change             | EventHandle | 切换视频时触发                                                          |
-| @click              | EventHandle | 点击整个视频区域触发                                                    |
-| @controlstoggle     | EventHandle | 控制栏状态变化触发                                                      |
+| 属性                | 类型        | 默认值 | 说明                                                                    |
+| ------------------- | ----------- | ------ | ----------------------------------------------------------------------- |
+| videoList           | Array       | -      | 视频列表，数组对象 `{src: string, poster?: string, objectFit?: string}` |
+| loop                | Boolean     | true   | 是否循环播放视频                                                        |
+| controls            | Boolean     | false  | 显示原生控制栏                                                          |
+| autoplay            | Boolean     | true   | 是否自动播放                                                            |
+| autoChange          | Boolean     | false  | 是否自动滚动播放                                                        |
+| loadMoreOffsetCount | Number      | 2      | 滚动加载阈值（即播放到剩余多少个之后触发加载更多                        |
+| @play               | EventHandle | -      | 当开始/继续播放时触发 play 事件                                         |
+| @error              | EventHandle | -      | 视频播放出错时触发                                                      |
+| @ended              | EventHandle | -      | 当播放到末尾时触发 ended 事件                                           |
+| @loadMore           | EventHandle | -      | 当滚动到最后第 N 条数据后，需要加载更多时触发                           |
+| @change             | EventHandle | -      | 切换视频时触发                                                          |
+| @click              | EventHandle | -      | 点击整个视频区域触发                                                    |
+| @controlstoggle     | EventHandle | -      | 控制栏状态变化触发                                                      |
 
 ### Slots 插槽
 
@@ -50,7 +51,7 @@ mTikTokRef.value?.initSwiperData(index);
 mTikTokRef.value?.togglePlay();
 
 // 播放跳转到指定位置，单位 s
-mTikTokRef.value?.playSeeked(10);
+mTikTokRef.value?.playSeeked(8);
 ```
 
 ## 使用示例
@@ -154,6 +155,7 @@ const loadMore = () => {
   console.log("加载更多");
 };
 
+// 切换视频触发，返回当前播放的内容
 const change = (e: any) => {
   console.log("🚀 ~ file: index.vue:53 ~ change ~ data:", e);
 };
@@ -165,7 +167,7 @@ const playIndex = (index: number) => {
 
 onMounted(() => {
   // 直接播放第3个
-  playIndex(3);
+  // playIndex(3);
 });
 </script>
 <style lang="scss">

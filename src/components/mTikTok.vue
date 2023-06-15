@@ -13,9 +13,10 @@
           :id="`video__${index}`"
           :controls="controls"
           :show-center-play-btn="controls"
+          :object-fit="item.objectFit"
           :autoplay="false"
           :loop="loop"
-          :object-fit="item.objectFit"
+          :custom-cache="false"
           @ended="ended"
           @controlstoggle="controlstoggle"
           @play="onPlay"
@@ -50,7 +51,7 @@
 <script lang="ts" setup>
 import { reactive, getCurrentInstance, watch } from "vue";
 import type { ComponentInternalInstance, PropType } from "vue";
-import { onLoad, onUnload } from "@dcloudio/uni-app";
+import { onUnload } from "@dcloudio/uni-app";
 const _this = getCurrentInstance() as ComponentInternalInstance;
 
 export interface IvideoItem {
@@ -145,6 +146,7 @@ const initVideoContexts = () => {
 
 const onPlay = (e: Event) => {
   state.isPlaying = true;
+  initFirstLoad();
   emits("play", e);
 };
 
@@ -272,13 +274,16 @@ watch(
 );
 
 let loadTimer: any = null;
-onLoad(() => {
-  // 为了首次只加载一条视频（提高首次加载性能），延迟加载后续视频
-  loadTimer = setTimeout(() => {
-    state.isFirstLoad = false;
-    clearTimeout(loadTimer);
-  }, 5000);
-});
+
+const initFirstLoad = () => {
+  if (state.isFirstLoad) {
+    // 为了首次只加载一条视频（提高首次加载性能），延迟加载后续视频
+    loadTimer = setTimeout(() => {
+      state.isFirstLoad = false;
+      clearTimeout(loadTimer);
+    }, 5000);
+  }
+};
 
 onUnload(() => {
   clearTimeout(loadTimer);
