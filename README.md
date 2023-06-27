@@ -1,5 +1,13 @@
 # 基于 uniapp 开发的仿抖音小程序组件（超高性能）
 
+### gif 截图效果
+
+<figure class="center">
+    <img src="https://github.com/akFace/tool/blob/master/video.gif?raw=true">
+</figure>
+
+- gif 帧率不够，实际真机效果非常丝滑
+
 ### 注：组件使用 vue3+typescript 开发
 
 - 全局仅渲染 3 个 swiper-item
