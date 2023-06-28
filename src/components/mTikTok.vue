@@ -10,6 +10,8 @@
     <swiper-item v-for="(item, index) in state.displaySwiperList" :key="index">
       <view class="swiper-item" @click="handleClick">
         <video
+          class="m-tiktok-video-player"
+          :src="item.src"
           :id="`video__${index}`"
           :controls="controls"
           :show-center-play-btn="controls"
@@ -21,8 +23,7 @@
           @controlstoggle="controlstoggle"
           @play="onPlay"
           @error="emits('error')"
-          class="m-tiktok-video-player"
-          :src="item.src"
+          @loadedmetadata="loadVideoData($event, item)"
           v-if="index === 0 || !state.isFirstLoad"
         ></video>
         <view
@@ -121,6 +122,15 @@ const props = defineProps({
   loadMoreOffsetCount: {
     type: Number,
     default: 2,
+  },
+
+  /**
+   * 视频自动自适应平铺模式
+   * 竖屏cover，横屏自适应
+   */
+  autoObjectFit: {
+    type: Boolean,
+    default: true,
   },
 });
 
@@ -282,6 +292,29 @@ const initFirstLoad = () => {
       state.isFirstLoad = false;
       clearTimeout(loadTimer);
     }, 5000);
+  }
+};
+
+/**
+ * 视频源数据加载时触发
+ * @param $event
+ * @param item
+ */
+const loadVideoData = ($event: any, item: IvideoItem) => {
+  // 如果存在过不修改
+  if (item.objectFit) {
+    return;
+  }
+  if (!props.autoObjectFit) {
+    return;
+  }
+  // 自动计算设置视频平铺模式,
+  if ($event.detail.width < $event.detail.height) {
+    // 竖屏全覆盖平铺
+    item.objectFit = "cover";
+  } else {
+    // 横屏，居中
+    item.objectFit = "contain";
   }
 };
 

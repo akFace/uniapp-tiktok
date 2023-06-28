@@ -1,12 +1,12 @@
 # 基于 uniapp 开发的仿抖音小程序组件（超高性能）
 
-### gif 截图效果
+### GIF 截图效果
 
 <figure class="center">
     <img src="https://github.com/akFace/tool/blob/master/video.gif?raw=true">
 </figure>
 
-- gif 帧率不够，实际真机效果非常丝滑
+- GIF 帧率不够，实际真机效果非常丝滑
 
 ### 注：组件使用 vue3+typescript 开发
 
@@ -27,21 +27,22 @@
 
 ## 参考 API
 
-| 属性                | 类型        | 默认值 | 说明                                                                    |
-| ------------------- | ----------- | ------ | ----------------------------------------------------------------------- |
-| videoList           | Array       | -      | 视频列表，数组对象 `{src: string, poster?: string, objectFit?: string}` |
-| loop                | Boolean     | true   | 是否循环播放视频                                                        |
-| controls            | Boolean     | false  | 显示原生控制栏                                                          |
-| autoplay            | Boolean     | true   | 是否自动播放                                                            |
-| autoChange          | Boolean     | false  | 是否自动滚动播放                                                        |
-| loadMoreOffsetCount | Number      | 2      | 滚动加载阈值（即播放到剩余多少个之后触发加载更多                        |
-| @play               | EventHandle | -      | 当开始/继续播放时触发 play 事件                                         |
-| @error              | EventHandle | -      | 视频播放出错时触发                                                      |
-| @ended              | EventHandle | -      | 当播放到末尾时触发 ended 事件                                           |
-| @loadMore           | EventHandle | -      | 当滚动到最后第 N 条数据后，需要加载更多时触发                           |
-| @change             | EventHandle | -      | 切换视频时触发                                                          |
-| @click              | EventHandle | -      | 点击整个视频区域触发                                                    |
-| @controlstoggle     | EventHandle | -      | 控制栏状态变化触发                                                      |
+| 属性                | 类型        | 默认值 | 说明                                                                                                      |
+| ------------------- | ----------- | ------ | --------------------------------------------------------------------------------------------------------- |
+| videoList           | Array       | -      | 视频列表，数组对象 `{src: string, poster?: string, objectFit?: string}`                                   |
+| autoObjectFit       | Boolean     | true   | 是否开启视频频自动自适应平铺模式，竖屏全屏覆盖，横屏自适应居中, 此参数优先级低于 videoList 中的 objectFit |
+| loop                | Boolean     | true   | 是否循环播放视频                                                                                          |
+| controls            | Boolean     | false  | 显示原生控制栏                                                                                            |
+| autoplay            | Boolean     | true   | 是否自动播放                                                                                              |
+| autoChange          | Boolean     | false  | 是否自动滚动播放                                                                                          |
+| loadMoreOffsetCount | Number      | 2      | 滚动加载阈值（即播放到剩余多少个之后触发加载更多                                                          |
+| @play               | EventHandle | -      | 当开始/继续播放时触发 play 事件                                                                           |
+| @error              | EventHandle | -      | 视频播放出错时触发                                                                                        |
+| @ended              | EventHandle | -      | 当播放到末尾时触发 ended 事件                                                                             |
+| @loadMore           | EventHandle | -      | 当滚动到最后第 N 条数据后，需要加载更多时触发                                                             |
+| @change             | EventHandle | -      | 切换视频时触发                                                                                            |
+| @click              | EventHandle | -      | 点击整个视频区域触发                                                                                      |
+| @controlstoggle     | EventHandle | -      | 控制栏状态变化触发                                                                                        |
 
 ### Slots 插槽
 
