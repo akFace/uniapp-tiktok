@@ -209,6 +209,8 @@ function initSwiperData(originIndex = state.originIndex) {
     index: originIndex,
     detail: state.originList[originIndex],
   });
+  // 赋值
+  state.originIndex = originIndex;
   // 加载更多
   var pCount = state.originList.length - props.loadMoreOffsetCount;
   if (originIndex == pCount) {
@@ -338,19 +340,23 @@ defineExpose({
   font-style: normal;
   font-display: swap;
 }
+
 .m-tiktok-video-iconfont {
   font-family: m-tiktok-play-icon;
 }
+
 .m-tiktok-video-swiper,
 .m-tiktok-video-player {
   width: 100%;
   height: 100vh;
   background-color: #000;
 }
+
 .m-tiktok-video-swiper {
   .swiper-item {
     position: relative;
   }
+
   .m-tiktok-video-poster {
     background-color: #000;
     position: absolute;
@@ -359,6 +365,7 @@ defineExpose({
     right: 0;
     bottom: 0;
   }
+
   .m-tiktok-video-play-btn {
     position: absolute;
     top: 0;
@@ -369,11 +376,13 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: center;
+
     .video-icon {
       font-size: 50px;
       display: block;
       color: rgba(255, 255, 255, 0.8);
       opacity: 0;
+
       &.active {
         opacity: 1;
       }

@@ -8,7 +8,11 @@
     >
       <!-- 此处为用户完全自定义 data 中的数据为当前渲染的数据 -->
       <template v-slot="data">
-        <view class="video-side-right">
+        <!-- active修复视频悬浮层消失和点击的问题 -->
+        <view
+          class="video-side-right"
+          :class="{ active: state.cutVideo.id === data.item.id }"
+        >
           <view class="action-item action-item-user">
             <image
               class="shop-logo"
@@ -28,7 +32,11 @@
             <text class="action-item-text">分享</text>
           </view>
         </view>
-        <view class="video-bottom-area">
+        <!-- active修复视频悬浮层消失和点击的问题 -->
+        <view
+          class="video-bottom-area"
+          :class="{ active: state.cutVideo.id === data.item.id }"
+        >
           <view class="shop-name"> @{{ data.item.name }} </view>
           <view class="shop-card">{{ data.item.desc }}</view>
         </view>
@@ -44,6 +52,7 @@ import mTikTok from "@/components/mTikTok.vue";
 const mTikTokRef = ref<InstanceType<typeof mTikTok>>();
 
 const state = reactive({
+  cutVideo: {} as AnyObject,
   videoList: [
     {
       src: "https://xjc.demo.hongcd.com/uploads/20230214/84e165388f5bfdb1550522f50f5a57bb.mp4",
@@ -96,6 +105,7 @@ const loadMore = () => {
 };
 
 const change = (e: any) => {
+  state.cutVideo = e.detail;
   console.log("🚀 ~ file: index.vue:53 ~ change ~ data:", e);
 };
 
@@ -110,21 +120,34 @@ onMounted(() => {
 });
 </script>
 <style lang="scss">
+$zIndex: 99;
+
 .video-layer {
   position: absolute;
   right: 12px;
   bottom: 120px;
   color: #fff;
 }
+
 .video-bottom-area {
   position: absolute;
   left: 20px;
   bottom: 40px;
-  z-index: 999;
+  opacity: 0;
+  transition: all 250ms;
+  z-index: 0;
+
+  &.active {
+    opacity: 1;
+    z-index: $zIndex;
+    transition-delay: 200ms;
+  }
+
   .shop-name {
     color: #fff;
     margin-bottom: 6px;
   }
+
   .shop-card {
     width: 160px;
     height: 80px;
@@ -132,30 +155,44 @@ onMounted(() => {
     border-radius: 4px;
   }
 }
+
 .video-side-right {
   position: absolute;
   right: 12px;
   bottom: 120px;
   color: #fff;
-  z-index: 999;
+  opacity: 0;
+  transition: all 250ms;
+  z-index: 0;
+
+  &.active {
+    opacity: 1;
+    z-index: $zIndex;
+    transition-delay: 200ms;
+  }
+
   .action-item {
     position: relative;
     margin-bottom: 20px;
     text-align: center;
+
     .shop-logo {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       overflow: hidden;
     }
+
     .iconfont {
       display: block;
       font-size: 28px;
     }
+
     .action-item-text {
       display: block;
       font-size: 12px;
     }
+
     .action-btn {
       position: absolute;
       left: 50%;
@@ -168,11 +205,13 @@ onMounted(() => {
       align-items: center;
       justify-content: center;
       background-color: #f60;
+
       .iconfont {
         font-size: 16px;
       }
     }
   }
+
   .action-item-user {
     margin-bottom: 40px;
   }
