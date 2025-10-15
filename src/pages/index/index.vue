@@ -25,7 +25,7 @@
           </view>
           <view class="action-item">
             <text class="iconfont icon-star11beifen">❤</text>
-            <text class="action-item-text">{{ data.item.id }}</text>
+            <text class="action-item-text">{{ data.item.fav }}</text>
           </view>
           <view class="action-item">
             <text class="iconfont icon-share">☝</text>
@@ -55,45 +55,52 @@ const state = reactive({
   cutVideo: {} as AnyObject,
   videoList: [
     {
-      src: "https://v26-default.365yg.com/3bc662e29e2c5a564daa14ed0881a3bd/68e8a0f9/video/tos/cn/tos-cn-ve-15/osmBdI0GA4cCF7PLeeR7BBAcgBfUrvR9vLYGLG/",
+      src: "https://sns-video-hw.xhscdn.com/stream/1/110/258/01e8dda817e899370103700199a1dfa9b2_258.mp4",
       id: "1",
       name: "开玩笑的鸡毛",
+      fav: 154,
       desc: "这里是简介内容",
     },
     {
-      src: "https://v26-default.365yg.com/b5ca75db19cfad6c550a7cae87042d27/68e8a1f7/video/tos/cn/tos-cn-ve-15c000-ce/oMMkDB7PbNJXQC1aXVEXCAi2vvhPIhP48iREA/?a=0&ch=0&cr=0&dr=0&lr=unwatermarked",
+      src: "https://sns-video-hw.xhscdn.com/stream/79/110/258/01e8ef3a5e7fd48f4f03700199e67c96fa_258.mp4",
       id: "2",
       name: "开玩笑的鸡毛",
+      fav: 1544,
       desc: "这里是简介内容",
     },
     {
-      src: "https://v26-default.365yg.com/7edfb2f43cd31206a70369e4909dc265/68e8a2b4/video/tos/cn/tos-cn-ve-15/o8iKjPTPiQoidBIAQdq7AQb4pahE8ZNvItxja/?a=0&ch=0&cr=0&dr=0&lr=unwatermarked",
+      src: "https://sns-video-hw.xhscdn.com/stream/79/110/258/01e8e5fa652aa89b4f03700199c25a5e16_258.mp4",
       id: "3",
       name: "开玩笑的鸡毛",
+      fav: 457,
       desc: "这里是简介内容",
     },
     {
-      src: "https://v3-default.365yg.com/e5615180d069b9348a46c62840b8fdac/68e8a359/video/tos/cn/tos-cn-ve-15/oE3B3aG3L2hNzARoS7feACrBD06QIGheARxx8I/?a=0&ch=0&cr=0&dr=0&lr=unwatermarked",
+      src: "https://sns-video-hw.xhscdn.com/stream/1/110/258/01e8ec727be8bc9a0103700199dba00279_258.mp4",
       id: "4",
       name: "开玩笑的鸡毛",
+      fav: 44,
       desc: "这里是简介内容",
     },
     {
-      src: "https://v9-default.365yg.com/1e9378f938cd86c380309b11d941854f/68e8a34e/video/tos/cn/tos-cn-ve-15c000-ce/oQB4czXcLQPibCESWDP3rIAAIEaNPUizKhm9M/?a=0&ch=0&cr=0&dr=0&lr=unwatermarked",
+      src: "https://sns-video-hw.xhscdn.com/stream/79/110/258/01e8dca9ade7eb494f037001999df7cd33_258.mp4",
       id: "5",
       name: "开玩笑的鸡毛",
+      fav: 4154,
       desc: "这里是简介内容",
     },
     {
-      src: "https://v11-default.365yg.com/327db7dd13b4be61f9ae1c39249195ca/68e8a3be/video/tos/cn/tos-cn-ve-15/o0KngYi5TAAkg9HogQFovGNDCfFSjsZEAABVfI/?a=0&ch=0&cr=0&dr=0&lr=unwatermarked",
+      src: "https://sns-video-hw.xhscdn.com/stream/1/110/258/01e8e24eace7c4880103700199b4049ff4_258.mp4",
       id: "6",
       name: "开玩笑的鸡毛",
+      fav: 1054,
       desc: "这里是简介内容",
     },
     {
-      src: "https://v11-default.365yg.com/3d5c806cd0664f32fbed54fd29f66b3b/68e8a416/video/tos/cn/tos-cn-ve-15c001-alinc2/oQI85kNAaBRIhg9zQfEAWeDAoIn91uQF0bpu8D/?a=0&ch=0&cr=0&dr=0&lr=unwatermarked",
+      src: "https://sns-video-hw.xhscdn.com/stream/79/110/258/01e8de25bddb4b714f03700199a3c3a989_258.mp4",
       id: "7",
       name: "开玩笑的鸡毛",
+      fav: 8154,
       desc: "这里是简介内容",
     },
   ],

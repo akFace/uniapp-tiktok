@@ -197,7 +197,7 @@ function initSwiperData(originIndex = state.originIndex) {
     state.oid = state.originList.length - 1;
   }
   // 暂停所有视频
-  state.videoContexts.map((item: any) => item?.stop());
+  state.videoContexts.map((item: any) => item?.pause());
   setTimeout(() => {
     // 当前视频
     if (props.autoplay) {
