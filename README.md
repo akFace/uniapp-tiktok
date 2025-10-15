@@ -94,7 +94,7 @@ mTikTokRef.value?.playSeeked(8);
           </view>
           <view class="action-item">
             <text class="iconfont icon-star11beifen">❤</text>
-            <text class="action-item-text">{{ data.item.id }}</text>
+            <text class="action-item-text">{{ data.item.fav }}</text>
           </view>
           <view class="action-item">
             <text class="iconfont icon-share">☝</text>
